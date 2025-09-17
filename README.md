@@ -210,7 +210,139 @@ while (1)
 上面这份代码项目名为zhizhentest
 
 实验二是流水灯
+跟实验1的区别就是，我将流水灯这个大主体，添加了一个struct led_list led[2];结构体，表示流水灯有两个led，
+
+新建一个LIUSHUIDENG.c/LIUSHUIDENG.h
+
+先在LIUSHUIDENG.h里面定义led_list每一个led的参数
 ```
+--LIUSHUIDENG_H中
+#ifndef __LIUSHUIDENG_H
+#define __LIUSHUIDENG_H
+#include <stdint.h>//否则uint8_t报错
+ //led宏定义 							        
+typedef enum                      
+{   	led1                     = 0,
+		led2                      = 1, 
+		led3					 =2,
+}liushui_led;
+//led状态宏定义 							        
+typedef enum                      
+{   	ON                     	 = 1,
+		OFF                      = 0,                                                                        
+}liushui_led_stuas;
+//定义一个led，有以下参数
+struct led_list {
+	int  led_code;//后续这个值直接传入  liushui_led里面的led1/led2来表示指的是哪一个led
+	uint8_t staus;//定义当前LED的状态
+	uint8_t polarity; //正负极性
+	int forward_time; //正极的持续时间
+	int negative_time;//负极的持续时间
+};
+  struct led_operations_two { //改名字避免跟实验一冲突      
+	void (*ctl) (struct led_list led); /* 控制LED, which-哪个LED, status:1-亮,0-灭 */
+};
+ void  dispose_main(void);
+#endif
+```
+接下来回到LIUSHUIDENG.c
 
 ```
+--LIUSHUIDENG.c中
+//接下来定义一个结构体，
+//目的是一个流水灯里面有两组LED，使用数组来管理
+struct liushuideng{
+	
+	struct led_list led[2];// 当前有两个LED，那么就选择2
+} ;//按键的结构体
+ struct liushuideng LIUSHUI;    //定义一个liushuideng类型的名称为LIUSHUI的结构体
+//控制单个led灯
+ void LIUSHUIDENG_ctl_dange (struct led_list led)
+{
+   if(led.led_code == led2) //如果输入参数为led2
+   {
+		if(led.staus==ON) //进来后判断stuas是ON/OFF
+		{     //这个开发板低电平点量
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_RESET);
+		}
+		else if(led.staus==OFF)
+		{
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_SET);
+		}
+   
+   }
+   if(led.led_code == led3) //如果输入参数为led3
+   {
+		if(led.staus==ON) //进来后判断stuas是ON/OFF
+		{     //这个开发板低电平点量
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_RESET);
+		}
+		else if(led.staus==OFF)
+		{
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_SET);
+		}
+   
+   }
+   
+} 
+  struct led_operations_two LIUSHUIDENG = {
+    .ctl  = LIUSHUIDENG_ctl_dange,
+};
+  //控制两个
+void countel_BOTH(struct liushuideng liushui)
+{
+
+   LIUSHUIDENG_ctl_dange(liushui.led[0]);
+	LIUSHUIDENG_ctl_dange(liushui.led[1]);
+}
+ void  dispose_main(void)//然后把这个直接丢进main函数里跑就行了
+ {
+   LIUSHUI.led[0].staus=OFF;// LIUSHUI定义的时候 struct liushuideng *LIUSHUI;是作为指针来定义的，所以使用->  
+   LIUSHUI.led[0].led_code=led2;
+   LIUSHUI.led[1].led_code=led3;
+   LIUSHUI.led[1].staus=OFF;
+	countel_BOTH(LIUSHUI);
+	 HAL_Delay(1000);
+	 LIUSHUI.led[0].staus=ON;// LIUSHUI定义的时候 struct liushuideng *LIUSHUI;是作为指针来定义的，所以使用->  
+   LIUSHUI.led[0].led_code=led2;
+   LIUSHUI.led[1].led_code=led3;
+   LIUSHUI.led[1].staus=ON;
+	countel_BOTH(LIUSHUI);
+	  HAL_Delay(1000);
+ 
+ }
+```
+进阶写法演示完毕，在下面再贴上之前我仅仅会用的结构体参数写法。
+
+源自工创赛HWT101陀螺仪的读取数据部分
+```
+--MYUSART.h中
+ typedef struct HWT101_USART
+{
+		uint8_t Rx_flag;											
+		uint8_t Rx_len;												
+		uint8_t frame_head;					
+		uint8_t RxBuffer[HWT101_RXBUFFER_LEN];		
+		float angle;						
+	
+		float w_Before_calibration;	
+	    float w_After_calibration;	
+		float ball_angle; 
+		float turn_start_yaw;
+}HWT101_USART;
+```
+来到HWT101.C
+```
+HWT101_USART HWT101;
+
+void HWT101_data_reduction(void)
+{
+		...省略
+			float angle = ((float)yaw / 32768.0f) * 180.0f;
+            HWT101.angle = angle;//使用
+		...
+}
+
+```
+
 
