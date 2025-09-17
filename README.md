@@ -138,6 +138,16 @@ while (1)
 	  board_demo_led_opr.ctl(led1,OFF);
   }
 ```
+ board_demo_led_opr.ctl(led1,ON);是在外部的结构体使用教程
+ 
+ 接下来演示函数入口传入的结构体使用方法
+
+
+
 上面这份代码项目名为zhizhentest
 
 实验二时流水灯，项目单独分开保存方便查阅
+```
+
+```
+
