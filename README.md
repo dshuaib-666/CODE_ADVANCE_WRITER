@@ -212,6 +212,20 @@ while (1)
 实验二是流水灯
 跟实验1的区别就是，我将流水灯这个大主体，添加了一个struct led_list led[2];结构体，表示流水灯有两个led，
 
+
+'代码框架'<br>
+```
+zhizhentest
+  MDK-ARM
+    main.c
+  CORE
+    Src
+      LIUSHUIDENG.C
+    Inc
+      chenshuze.h//用于对底层的.h文件进行声明，方便管理，这样只需要在main.c里面include "chenshuze.h"就行
+      LIUSHUIDENG.H
+```
+
 新建一个LIUSHUIDENG.c/LIUSHUIDENG.h
 
 先在LIUSHUIDENG.h里面定义led_list每一个led的参数
@@ -313,6 +327,8 @@ void countel_BOTH(struct liushuideng liushui)
  }
 ```
 进阶写法演示完毕，在下面再贴上之前我仅仅会用的结构体参数写法。
+
+实验二的项目名称为zhizhentest1
 
 源自工创赛HWT101陀螺仪的读取数据部分
 ```
