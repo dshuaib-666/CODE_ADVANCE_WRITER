@@ -157,7 +157,7 @@ while (1)
 ```
  void led_counter(struct led_operations *opr)
  {
-	   opr-> ctl(led1,ON);
+	   opr-> ctl(led1,ON);//后续调用这个函数，传入的是board_demo_led_opr结构体，因此这一条约等于board_demo_led_opr.ctl(led1,ON);
 	   HAL_Delay(1000);
 	   opr-> ctl(led1,OFF);
 	   HAL_Delay(1000);
