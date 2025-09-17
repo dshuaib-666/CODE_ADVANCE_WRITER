@@ -106,6 +106,7 @@ extern struct led_operations board_demo_led_opr;//添加
 ```
 为了在后续及以后的开发中，不同的.c文件调用相同的.h文件不需要重复复制粘贴一堆#include，选择在chenshuze.h中将需要的#include进行集中，最后不同的.c文件只需要#include "chenshuze.h"就可以调用不同的.h文件内声明的函数/变量
 ```
+--chenshuze.h中
 #ifndef __CHENSHUZE_H
 #define __CHENSHUZE_H
 #include "ZHIZHEN.h"
@@ -151,7 +152,27 @@ while (1)
  
  接下来演示函数入口传入的结构体使用方法
 
-
+定义一个led_counter(struct led_operations *opr)，需要的参数是led_operations类型的
+//创建一个led控制，这个与直接在main里调用的写法是不一样的
+```
+ void led_counter(struct led_operations *opr)
+ {
+	   opr-> ctl(led1,ON);
+	   HAL_Delay(1000);
+	   opr-> ctl(led1,OFF);
+	   HAL_Delay(1000);
+ }
+```
+接下来在ZHIZHEN.h进行声明 void led_counter(struct led_operations *opr);，（基础操作不演示）
+然后在main的函数入口while直接调用led_counter(&board_demo_led_opr);
+```
+  while (1)
+  {
+    /* USER CODE END WHILE */
+    /* USER CODE BEGIN 3 */  
+	  led_counter(&board_demo_led_opr);
+  }
+```
 
 上面这份代码项目名为zhizhentest
 
