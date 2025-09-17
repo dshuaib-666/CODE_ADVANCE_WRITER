@@ -103,7 +103,41 @@ typedef enum
 extern struct led_operations board_demo_led_opr;//添加
 #endif
 ```
+然后来到main.c文件，在最上面的#include区进行include
+```
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+#include "gpio.h"
 
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+#include "ZHIZHEN.h"//这个
+/* USER CODE END Includes */
+```
+然后来到mian入口
+```
+这两份代码效果一样的，都实现了PB0的电平翻转
+while (1)
+  {
+    /* USER CODE END WHILE */
 
+    /* USER CODE BEGIN 3 */
+	  HAL_Delay(1000);
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);//就是直接调用
+	  HAL_Delay(1000);
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);
+  }
+while (1)
+  {
+    /* USER CODE END WHILE */
 
+    /* USER CODE BEGIN 3 */
+	  HAL_Delay(1000);
+	  board_demo_led_opr.ctl(led1,ON);//输入哪个led，然后内部再进行判断，区别就是封装好了
+	  HAL_Delay(1000);
+	  board_demo_led_opr.ctl(led1,OFF);
+  }
+```
+上面这份代码项目名为zhizhentest
 
+实验二时流水灯，项目单独分开保存方便查阅
