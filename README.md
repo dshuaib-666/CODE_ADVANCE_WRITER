@@ -73,8 +73,13 @@ void board_demo_led_init (int which) //参数要和.h里规定的一样，具体
 		}
    }
 }
-//定义结构体完成，如果是指针的话就是*board_demo_led_opr
+//定义结构体写法
  struct led_operations board_demo_led_opr = {
+    .init = board_demo_led_init,
+    .ctl  = board_demo_led_ctl,
+};
+//指针写法
+ struct led_operations *board_demo_led_opr = {
     .init = board_demo_led_init,
     .ctl  = board_demo_led_ctl,
 };
@@ -139,6 +144,7 @@ while (1)
 	  HAL_Delay(1000);
 	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);
   }
+//结构体写法
 while (1)
   {
     /* USER CODE END WHILE */
@@ -150,12 +156,24 @@ while (1)
 	  HAL_Delay(1000);		
 	  board_demo_led_opr.ctl(led1,OFF);
   }
+//指针写法
+while (1)
+  {
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+	  HAL_Delay(1000);
+	  board_demo_led_opr->ctl(led1,ON);//输入哪个led，然后内部再进行判断，区别就是封装好了
+      //如果前面定义的是指针，那么就使用board_demo_led_opr->ctl(led1,ON);
+	  HAL_Delay(1000);		
+	  board_demo_led_opr->ctl(led1,OFF);
+  }
 ```
  board_demo_led_opr.ctl(led1,ON);是在外部的结构体使用教程
  
  接下来演示函数入口传入的结构体使用方法
 
-定义一个led_counter(struct led_operations *opr)，需要的参数是led_operations类型的
+定义一个led_counter(struct led_operations opr)，需要的参数是led_operations类型的
 //创建一个led控制，这个与直接在main里调用的写法是不一样的
 ```
 //结构体写法
@@ -166,8 +184,16 @@ while (1)
 	   opr.ctl(led1,OFF);
 	   HAL_Delay(1000);
  }
+//指针写法
+ void led_counter(struct led_operations *opr)
+ {
+	   opr->ctl(led1,ON);//后续调用这个函数，传入的是board_demo_led_opr结构体，因此这一条约等于board_demo_led_opr->ctl(led1,ON);
+	   HAL_Delay(1000);
+	   opr->ctl(led1,OFF);
+	   HAL_Delay(1000);
+ }
 ```
-接下来在ZHIZHEN.h进行声明 void led_counter(struct led_operations *opr);，（基础操作不演示）
+接下来在ZHIZHEN.h进行声明 void led_counter(struct led_operations *opr);/void led_counter(struct led_operations opr);，（基础操作不演示）
 然后在main的函数入口while直接调用led_counter(&board_demo_led_opr);
 ```
   while (1)
