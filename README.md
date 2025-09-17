@@ -22,20 +22,31 @@ zhizhentest
 ```
 框架就是HAL库开发的基本框架
 
-接下来在ZHIZHEN.H里定义一个led_operations类型
+接下来在ZHIZHEN.H里定义一个led_operations类型，并且使用一个结构体（类似宏定义）来提高代码可读性
 ```
 struct led_operations {
 	void (*init) (int which); /* 初始化LED, which-哪个LED */       
 	void (*ctl) (int which, char status); /* 控制LED, which-哪个LED, status:1-亮,0-灭 */
 };
+//led宏定义 							        
+typedef enum     //选择是哪个led                 
+{   	led1                     = 0,
+		led2                      = 1,                                                                        
+}led;
+//led状态宏定义 							        
+typedef enum                      
+{   	ON                     	 = 1,
+		OFF                      = 0,                                                                        
+}led_stuas;
 ```
 然后来到ZHIZHEN.C里进行定义一个led_operations类型，名为 board_demo_led_opr结构体
 
 这个结构体内是有函数的，所以我们要先定义结构体内部函数
 ```
+
 void board_demo_led_init (int which) //参数要和.h里规定的一样，具体需要返回什么参数/输入什么参数，就在.h文件里改
 {
-   //执行gpio的初始化,当然HAL库并不需要就放着不动
+   //执行gpio的初始化,当然HAL库并不需要，标准库的GPIO初始化可以放在这里
 }
  void board_demo_led_ctl (int which, char status)
 {
