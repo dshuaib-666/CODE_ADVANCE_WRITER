@@ -187,7 +187,7 @@ while (1)
 //指针写法
  void led_counter(struct led_operations *opr)
  {
-	   opr->ctl(led1,ON);//后续调用这个函数，传入的是board_demo_led_opr结构体，因此这一条约等于board_demo_led_opr->ctl(led1,ON);
+	   opr->ctl(led1,ON);//后续调用这个函数，传入的是board_demo_led_opr指针，因此这一条约等于board_demo_led_opr->ctl(led1,ON);
 	   HAL_Delay(1000);
 	   opr->ctl(led1,OFF);
 	   HAL_Delay(1000);
@@ -326,9 +326,9 @@ void countel_BOTH(struct liushuideng liushui)
  
  }
 ```
-进阶写法演示完毕，在下面再贴上之前我仅仅会用的结构体参数写法。
+进阶写法演示完毕，实验二的项目名称为zhizhentest1
 
-实验二的项目名称为zhizhentest1
+在下面再贴上之前我仅仅会用的结构体参数写法。
 
 源自工创赛HWT101陀螺仪的读取数据部分
 ```
