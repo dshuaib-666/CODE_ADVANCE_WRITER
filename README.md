@@ -79,8 +79,31 @@ void board_demo_led_init (int which) //参数要和.h里规定的一样，具体
 由于我们一会跨文件，在main.c文件里面实验，因此需要在.h文件进行声明
 ```
 （其实直接在mian.c里面export struct led_operations board_demo_led_opr也可以，但是这样会导致代码冗余）
-.h文件本身也是声明文件，变量等直接在这里面进行声明，后续其他.c文件要调用该变量，直接#include ".c"就好
+.h文件本身也是声明文件，变量等直接在这里面进行声明，后续其他.c文件要调用该变量，直接#include ".h"就好
 ```
+回到ZHIZHEN.H
+```
+--ZHIZHEN.H中
+#ifndef __ZHIZHEN_H
+#define __ZHIZHEN_H
+struct led_operations {
+	void (*init) (int which); /* 初始化LED, which-哪个LED */       
+	void (*ctl) (int which, char status); /* 控制LED, which-哪个LED, status:1-亮,0-灭 */
+};
+//led宏定义 							        
+typedef enum     //选择是哪个led                 
+{   	led1                     = 0,
+		led2                      = 1,                                                                        
+}led;
+//led状态宏定义 							        
+typedef enum                      
+{   	ON                     	 = 1,
+		OFF                      = 0,                                                                        
+}led_stuas;
+extern struct led_operations board_demo_led_opr;//添加
+#endif
+```
+
 
 
 
