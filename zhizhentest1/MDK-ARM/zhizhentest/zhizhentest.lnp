@@ -1,0 +1,26 @@
+--cpu Cortex-M0+
+"zhizhentest\startup_stm32g030xx.o"
+"zhizhentest\zhizhen.o"
+"zhizhentest\main.o"
+"zhizhentest\gpio.o"
+"zhizhentest\stm32g0xx_it.o"
+"zhizhentest\stm32g0xx_hal_msp.o"
+"zhizhentest\liushuideng.o"
+"zhizhentest\stm32g0xx_hal_rcc.o"
+"zhizhentest\stm32g0xx_hal_rcc_ex.o"
+"zhizhentest\stm32g0xx_ll_rcc.o"
+"zhizhentest\stm32g0xx_hal_flash.o"
+"zhizhentest\stm32g0xx_hal_flash_ex.o"
+"zhizhentest\stm32g0xx_hal_gpio.o"
+"zhizhentest\stm32g0xx_hal_dma.o"
+"zhizhentest\stm32g0xx_hal_dma_ex.o"
+"zhizhentest\stm32g0xx_hal_pwr.o"
+"zhizhentest\stm32g0xx_hal_pwr_ex.o"
+"zhizhentest\stm32g0xx_hal_cortex.o"
+"zhizhentest\stm32g0xx_hal.o"
+"zhizhentest\stm32g0xx_hal_exti.o"
+"zhizhentest\system_stm32g0xx.o"
+--strict --scatter "zhizhentest\zhizhentest.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "zhizhentest.map" -o zhizhentest\zhizhentest.axf
