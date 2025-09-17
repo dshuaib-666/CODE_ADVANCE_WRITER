@@ -9,6 +9,8 @@ C语言进阶写法
         1.实现点亮LED
         2.实现流水灯
 
+开发环境:使用STM32G030F6P6开发板，自带灯是PB0，使用CUBEMX+KEIL
+
 '代码框架'<br>
 ```
 zhizhentest
