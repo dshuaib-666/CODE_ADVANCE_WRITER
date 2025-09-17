@@ -105,8 +105,14 @@ extern struct led_operations board_demo_led_opr;//添加
 #endif
 ```
 为了在后续及以后的开发中，不同的.c文件调用相同的.h文件不需要重复复制粘贴一堆#include，选择在chenshuze.h中将需要的#include进行集中，最后不同的.c文件只需要#include "chenshuze.h"就可以调用不同的.h文件内声明的函数/变量
-
-然后来到main.c文件，在最上面的#include区进行include
+```
+#ifndef __CHENSHUZE_H
+#define __CHENSHUZE_H
+#include "ZHIZHEN.h"
+...根据需要添加其他的.h
+#endif
+```
+然后来到main.c文件，在最上面的#include区进行include chenshuze.h
 ```
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -114,7 +120,7 @@ extern struct led_operations board_demo_led_opr;//添加
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "ZHIZHEN.h"//这个
+#include "chenshuze.h"//这个
 /* USER CODE END Includes */
 ```
 然后来到mian入口
