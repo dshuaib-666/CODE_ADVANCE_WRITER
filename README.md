@@ -25,7 +25,7 @@ zhizhentest
 ```
 框架就是HAL库开发的基本框架
 
-接下来在ZHIZHEN.H里定义一个led_operations类型，并且使用一个结构体（类似宏定义）来提高代码可读性
+接下来在ZHIZHEN.H里定义一个led_operations类型，并且使用一个枚举常量（类似宏定义）来提高代码可读性
 ```
 --ZHIZHEN.H中
 #ifndef __ZHIZHEN_H
@@ -34,12 +34,12 @@ struct led_operations {
 	void (*init) (int which); /* 初始化LED, which-哪个LED */       
 	void (*ctl) (int which, char status); /* 控制LED, which-哪个LED, status:1-亮,0-灭 */
 };
-//led宏定义 							        
+//led枚举常量 							        
 typedef enum     //选择是哪个led                 
 {   	led1                     = 0,
 		led2                      = 1,                                                                        
 }led;
-//led状态宏定义 							        
+//led状态枚举常量(类似宏定义) 							        
 typedef enum                      
 {   	ON                     	 = 1,
 		OFF                      = 0,                                                                        
