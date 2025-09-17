@@ -11,6 +11,8 @@ C语言进阶写法
 
 开发环境:使用STM32G030F6P6开发板，自带灯是PB0，流水灯使用的是PB7/PB9,使用CUBEMX+KEIL
 
+主要演示结构体写法，指针写法在源码里，我使用define定义自行查阅
+
 '代码框架'<br>
 ```
 zhizhentest
@@ -71,7 +73,7 @@ void board_demo_led_init (int which) //参数要和.h里规定的一样，具体
 		}
    }
 }
-//定义结构体完成
+//定义结构体完成，如果是指针的话就是*board_demo_led_opr
  struct led_operations board_demo_led_opr = {
     .init = board_demo_led_init,
     .ctl  = board_demo_led_ctl,
@@ -144,7 +146,8 @@ while (1)
     /* USER CODE BEGIN 3 */
 	  HAL_Delay(1000);
 	  board_demo_led_opr.ctl(led1,ON);//输入哪个led，然后内部再进行判断，区别就是封装好了
-	  HAL_Delay(1000);
+      //如果前面定义的是指针，那么就使用board_demo_led_opr->ctl(led1,ON);
+	  HAL_Delay(1000);		
 	  board_demo_led_opr.ctl(led1,OFF);
   }
 ```
@@ -155,11 +158,12 @@ while (1)
 定义一个led_counter(struct led_operations *opr)，需要的参数是led_operations类型的
 //创建一个led控制，这个与直接在main里调用的写法是不一样的
 ```
- void led_counter(struct led_operations *opr)
+//结构体写法
+ void led_counter(struct led_operations opr)
  {
-	   opr-> ctl(led1,ON);//后续调用这个函数，传入的是board_demo_led_opr结构体，因此这一条约等于board_demo_led_opr.ctl(led1,ON);
+	   opr.ctl(led1,ON);//后续调用这个函数，传入的是board_demo_led_opr结构体，因此这一条约等于board_demo_led_opr.ctl(led1,ON);
 	   HAL_Delay(1000);
-	   opr-> ctl(led1,OFF);
+	   opr.ctl(led1,OFF);
 	   HAL_Delay(1000);
  }
 ```
@@ -169,7 +173,10 @@ while (1)
   while (1)
   {
     /* USER CODE END WHILE */
-    /* USER CODE BEGIN 3 */  
+    /* USER CODE BEGIN 3 */
+      //结构体写法
+	  led_counter(board_demo_led_opr);
+      //指针写法
 	  led_counter(&board_demo_led_opr);
   }
 ```
