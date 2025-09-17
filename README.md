@@ -9,7 +9,7 @@ C语言进阶写法
         1.实现点亮LED
         2.实现流水灯
 
-开发环境:使用STM32G030F6P6开发板，自带灯是PB0，使用CUBEMX+KEIL
+开发环境:使用STM32G030F6P6开发板，自带灯是PB0，流水灯使用的是PB7/PB9,使用CUBEMX+KEIL
 
 '代码框架'<br>
 ```
@@ -20,6 +20,7 @@ zhizhentest
     Src
       ZHIZHEN.C
     Inc
+      chenshuze.h//用于对底层的.h文件进行声明，方便管理，这样只需要在main.c里面include "chenshuze.h"就行
       ZHIZHEN.H
 ```
 框架就是HAL库开发的基本框架
@@ -103,6 +104,8 @@ typedef enum
 extern struct led_operations board_demo_led_opr;//添加
 #endif
 ```
+为了在后续及以后的开发中，不同的.c文件调用相同的.h文件不需要重复复制粘贴一堆#include，选择在chenshuze.h中将需要的#include进行集中，最后不同的.c文件只需要#include "chenshuze.h"就可以调用不同的.h文件内声明的函数/变量
+
 然后来到main.c文件，在最上面的#include区进行include
 ```
 /* Includes ------------------------------------------------------------------*/
