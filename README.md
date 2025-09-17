@@ -8,18 +8,15 @@ C语言进阶写法
 '代码框架'<br>
 ```
 zhizhentest
-
   MDK-ARM
-  
     main.c
-    
   CORE
-  
     Src
-    
       ZHIZHEN.C
-  
-``` 
+    Inc
+      ZHIZHEN.H
+```
+框架就是HAL库开发的基本框架
 
   
 
