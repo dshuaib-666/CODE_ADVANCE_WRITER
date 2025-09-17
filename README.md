@@ -6,14 +6,21 @@ C语言进阶写法
 因此我自己写了一份教程，来给以后的自己及师弟师妹们查阅。
 
 '代码框架'<br>
-
+```
 zhizhentest
+
   MDK-ARM
+  
     main.c
+    
   CORE
+  
     Src
+    
       ZHIZHEN.C
   
+``` 
+
   
 
 
