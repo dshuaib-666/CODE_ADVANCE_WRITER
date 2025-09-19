@@ -14,7 +14,7 @@ C语言进阶写法
 注意:指针写法和结构体写法只能保留一个
 
 
-总结：打算要指针写法时
+总结：一个类型可以定义成指针/结构体 打算要指针写法时
 ```
 定义一个led_operations类型的指针struct led_operations *board_demo_led_opr；
 而需要调取指针内部的参数/函数时，使用board_demo_led_opr->参数/函数(函数参数)
