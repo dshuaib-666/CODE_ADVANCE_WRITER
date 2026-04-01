@@ -1,6 +1,10 @@
 # CODE_ADVANCE_WRITER
 C语言进阶写法
 ==
+
+这篇教程是我大三上刚开始写的，后续我又单独学习了数据结构，对该指针结构体有了更深的理解，推荐还没学过数据结构的可以直接去学习数据结构
+https://www.bilibili.com/video/BV1tNpbekEht/?spm_id_from=333.788.top_right_bar_window_default_collection.content.click&vd_source=7d3a4ea24bec7549ce4f1cb9b037001c
+
 这段时间在学习LINUX内核，里面的代码写法对于我来说收获颇丰。
 
 因此我自己写了一份教程，来给以后的自己及师弟师妹们查阅。
